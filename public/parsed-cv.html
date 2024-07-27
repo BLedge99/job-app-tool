@@ -1,0 +1,28 @@
+<!-- public/parsed-cv.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parsed CV Result</title>
+</head>
+<body>
+    <h1>Parsed CV Result</h1>
+    <pre id="parsedCvContent"></pre>
+    <a href="index.html">Upload Another CV</a>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const cvId = urlParams.get('id');
+
+        fetch(`/parse/${cvId}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('parsedCvContent').textContent = data;
+            })
+            .catch(error => {
+                document.getElementById('parsedCvContent').textContent = 'Error fetching parsed CV: ' + error.message;
+            });
+    </script>
+</body>
+</html>
